@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_20-7369227732377a70c9161e131056af5ff8cc8bc8",
+  "solcVersion": "0.8.20",
+  "solcLongVersion": "0.8.20+commit.a1b79de6",
+  "userSourceNameMap": {
+    "contracts/VehicleHistory.sol": "project/contracts/VehicleHistory.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "shanghai",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/VehicleHistory.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.20;\r\n\r\ncontract VehicleHistory {\r\n\r\n    struct Record {\r\n        uint256 timestamp;\r\n        string dataType;      // Bao duong, Thay linh kien, Tai nan\r\n        uint256 odometer;     // So km\r\n        string description;   // Mo ta chi tiet\r\n        address recorder;     // Ai ghi du lieu\r\n    }\r\n\r\n    struct Vehicle {\r\n        string vin;\r\n        Record[] records;\r\n        bool exists;\r\n    }\r\n\r\n    mapping(string => Vehicle) private vehicles;\r\n\r\n    event VehicleCreated(string vin);\r\n    event RecordAdded(string vin, string dataType, uint256 odometer);\r\n\r\n    modifier onlyAuthorized() {\r\n        // Demo: cho phep moi nguoi ghi\r\n        // Thuc te: chi garage/doi tac duoc cap quyen\r\n        _;\r\n    }\r\n\r\n    function createVehicle(string memory _vin) public {\r\n        require(!vehicles[_vin].exists, \"Vehicle already exists\");\r\n\r\n        vehicles[_vin].vin = _vin;\r\n        vehicles[_vin].exists = true;\r\n\r\n        emit VehicleCreated(_vin);\r\n    }\r\n\r\n    function addRecord(\r\n        string memory _vin,\r\n        string memory _dataType,\r\n        uint256 _odometer,\r\n        string memory _description\r\n    ) public onlyAuthorized {\r\n        require(vehicles[_vin].exists, \"Vehicle does not exist\");\r\n\r\n        vehicles[_vin].records.push(\r\n            Record({\r\n                timestamp: block.timestamp,\r\n                dataType: _dataType,\r\n                odometer: _odometer,\r\n                description: _description,\r\n                recorder: msg.sender\r\n            })\r\n        );\r\n\r\n        emit RecordAdded(_vin, _dataType, _odometer);\r\n    }\r\n\r\n    function getRecordCount(string memory _vin) public view returns (uint256) {\r\n        require(vehicles[_vin].exists, \"Vehicle does not exist\");\r\n        return vehicles[_vin].records.length;\r\n    }\r\n\r\n    function getRecord(string memory _vin, uint256 _index)\r\n        public\r\n        view\r\n        returns (\r\n            uint256 timestamp,\r\n            string memory dataType,\r\n            uint256 odometer,\r\n            string memory description,\r\n            address recorder\r\n        )\r\n    {\r\n        require(vehicles[_vin].exists, \"Vehicle does not exist\");\r\n        require(_index < vehicles[_vin].records.length, \"Index out of bounds\");\r\n\r\n        Record memory r = vehicles[_vin].records[_index];\r\n        return (r.timestamp, r.dataType, r.odometer, r.description, r.recorder);\r\n    }\r\n}"
+      }
+    }
+  }
+}

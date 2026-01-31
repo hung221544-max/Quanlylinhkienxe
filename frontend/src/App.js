@@ -1,5 +1,8 @@
 import { ShieldCheck, Search, QrCode, Wrench, AlertTriangle } from "lucide-react";
+import CreateVehicle from "./components/CreateVehicle";
 import ConnectWallet from "./ConnectWallet";
+import AddRecord from "./components/AddRecord";
+
 
 export default function App() {
   return (
@@ -43,6 +46,9 @@ export default function App() {
 
           <div className="mt-8">
             <ConnectWallet />
+            <CreateVehicle />
+            <AddRecord />
+            
           </div>
         </div>
 
