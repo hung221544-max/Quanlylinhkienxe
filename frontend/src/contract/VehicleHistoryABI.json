@@ -1,0 +1,68 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "string", "name": "vin", "type": "string" },
+      { "indexed": false, "internalType": "string", "name": "dataType", "type": "string" },
+      { "indexed": false, "internalType": "uint256", "name": "odometer", "type": "uint256" }
+    ],
+    "name": "RecordAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "string", "name": "vin", "type": "string" }
+    ],
+    "name": "VehicleCreated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_vin", "type": "string" },
+      { "internalType": "string", "name": "_dataType", "type": "string" },
+      { "internalType": "uint256", "name": "_odometer", "type": "uint256" },
+      { "internalType": "string", "name": "_description", "type": "string" }
+    ],
+    "name": "addRecord",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_vin", "type": "string" }
+    ],
+    "name": "createVehicle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_vin", "type": "string" },
+      { "internalType": "uint256", "name": "_index", "type": "uint256" }
+    ],
+    "name": "getRecord",
+    "outputs": [
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+      { "internalType": "string", "name": "dataType", "type": "string" },
+      { "internalType": "uint256", "name": "odometer", "type": "uint256" },
+      { "internalType": "string", "name": "description", "type": "string" },
+      { "internalType": "address", "name": "recorder", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_vin", "type": "string" }
+    ],
+    "name": "getRecordCount",
+    "outputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
